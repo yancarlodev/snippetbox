@@ -9,8 +9,11 @@ services:
 
   db:
     image: mysql:8.1
+    container_name: snippetbox-db
+    env_file: .env
     volumes:
       - db_data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
 
 volumes:
   db_data:
