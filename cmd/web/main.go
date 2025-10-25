@@ -6,8 +6,6 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
-
-	"snippetbox.srcrer.duckdns.org/internal/web"
 )
 
 type config struct {
@@ -16,7 +14,7 @@ type config struct {
 }
 
 var (
-	cfg    config
+	cfg config
 )
 
 type application struct {
@@ -29,23 +27,13 @@ func main() {
 
 	flag.Parse()
 
-	mux := http.NewServeMux()
-
 	app := &application{
 		logger: slog.New(slog.NewTextHandler(os.Stdout, nil)),
 	}
 
-	mux.HandleFunc("GET /{$}", app.home)
-	mux.HandleFunc("GET /snippet/view/{id}", app.snippetView)
-	mux.HandleFunc("GET /snippet/create", app.snippetCreate)
-	mux.HandleFunc("POST /snippet/create", app.snippetCreatePost)
-
-	fileServer := http.FileServer(web.NeuteredFileSystem{Fs: http.Dir(cfg.staticDir)})
-	mux.Handle("GET /static/", http.StripPrefix("/static", fileServer))
-
 	app.logger.Info("starting server...", slog.String("addr", fmt.Sprintf("http://localhost%s", cfg.addr)))
 
-	err := http.ListenAndServe(cfg.addr, mux)
+	err := http.ListenAndServe(cfg.addr, app.routes())
 
 	app.logger.Error(err.Error())
 	os.Exit(1)
