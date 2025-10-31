@@ -26,9 +26,9 @@ This project follows and expands upon the "Let's Go" book by Alex Edwards, focus
 
 - [ ] **4. Database-driven responses**
     - [X] 4.1. Setting up MySQL
-    - [ ] 4.2. Installing a database driver
-    - [ ] 4.3. Modules and reproducible builds
-    - [ ] 4.4. Creating a database connection pool
+    - [X] 4.2. Installing a database driver
+    - [X] 4.3. Modules and reproducible builds
+    - [X] 4.4. Creating a database connection pool
     - [ ] 4.5. Designing a database model
     - [ ] 4.6. Executing SQL statements
     - [ ] 4.7. Single-record SQL queries
